@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Package, RefreshCw, Loader2 } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus } from "@/types/order";
 
 interface Order {
   id: string;
@@ -153,7 +153,7 @@ export default function AdminOrdersPage() {
             <p className="text-muted-foreground">Gestiona todas las órdenes de la tienda</p>
           </div>
           <button
-            onClick={fetchOrders}
+            onClick={() => fetchOrders()}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
           >
             <RefreshCw className="h-4 w-4" />
