@@ -25,6 +25,17 @@ ts-debug.log*
 # local env files
 .env*.local
 
+# local secrets and data
+.env
+dev.db
+nul
+
+# editor/agent metadata
+.agent/
+.claude/
+.cursor/
+.opencode/
+
 # vercel
 .vercel
 
