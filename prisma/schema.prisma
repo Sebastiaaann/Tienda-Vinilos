@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum OrderType {
+  DELIVERY
+  PICKUP
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]
+  addresses Address[]
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String?
+  street    String
+  number    String
+  apartment String?
+  region    String
+  city      String
+  comuna    String
+  zipCode   String?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id])
+  orders    Order[]
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  orderNumber   String      @unique
+  userId        String?
+  addressId     String
+  type          OrderType   @default(DELIVERY)
+  status        OrderStatus @default(PENDING)
+  
+  // Customer info (for guest orders)
+  customerEmail String
+  customerName  String
+  customerPhone String
+  
+  // Pricing
+  subtotal      Float
+  shipping      Float       @default(0)
+  discount      Float       @default(0)
+  tax           Float       @default(0)
+  total         Float
+  
+  paymentMethod String
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  paidAt        DateTime?
+
+  user          User?       @relation(fields: [userId], references: [id])
+  address       Address     @relation(fields: [addressId], references: [id])
+  items         OrderItem[]
+
+  @@index([orderNumber])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String
+  productName String
+  quantity    Int
+  price       Float
+  imageUrl    String?
+  artist      String?
+  category    String?
+  createdAt   DateTime @default(now())
+
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+}
