@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 // Helper to format price
@@ -32,9 +33,11 @@ export const VinylGrid = ({ products }: VinylGridProps) => {
                         {/* Image Container */}
                         <div className="aspect-square relative mb-6 shadow-sm group-hover:shadow-md transition-shadow">
                             {product.image ? (
-                                <img
+                                <Image
                                     src={product.image}
                                     alt={product.name}
+                                    fill
+                                    sizes="(min-width: 1024px) 20vw, (min-width: 768px) 30vw, 45vw"
                                     className="w-full h-full object-cover"
                                 />
                             ) : (

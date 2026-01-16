@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, Package, ArrowRight, Home, Loader2, AlertTriangle } from "lucide-react";
@@ -142,9 +143,11 @@ export default function OrderConfirmationPage() {
               {order.items.map((item) => (
                 <div key={item.id} className="flex items-start gap-4 pb-3 border-b last:border-0">
                   {item.imageUrl && (
-                    <img
+                    <Image
                       src={item.imageUrl}
                       alt={item.productName}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 object-cover rounded border"
                     />
                   )}

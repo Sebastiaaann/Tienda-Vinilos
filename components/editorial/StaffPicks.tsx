@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
@@ -66,7 +67,13 @@ export const StaffPicks = () => {
                         {/* Staff Photo */}
                         <div className="w-full lg:w-1/4">
                             <div className="aspect-[3/4] relative overflow-hidden bg-neutral-100">
-                                <img src={activeStaff.image} alt={activeStaff.name} className="w-full h-full object-cover" />
+                                <Image
+                                    src={activeStaff.image}
+                                    alt={activeStaff.name}
+                                    fill
+                                    sizes="(min-width: 1024px) 25vw, 50vw"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                         </div>
 
@@ -75,7 +82,13 @@ export const StaffPicks = () => {
                             {(activeStaff.picks.length > 0 ? activeStaff.picks : staffMembers[0].picks).map((pick, i) => (
                                 <Link href={`/productos/${pick.id}`} key={i} className="group cursor-scale">
                                     <div className="aspect-square relative overflow-hidden bg-neutral-50 mb-4">
-                                        <img src={pick.image} alt={pick.album} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        <Image
+                                            src={pick.image}
+                                            alt={pick.album}
+                                            fill
+                                            sizes="(min-width: 1024px) 18vw, (min-width: 768px) 28vw, 45vw"
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
                                         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <ArrowUpRight className="w-5 h-5" />
                                         </div>

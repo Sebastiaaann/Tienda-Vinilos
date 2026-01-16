@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -32,9 +33,11 @@ export const ArtistGrid = () => {
                             transition={{ duration: 0.3 }}
                             className="w-full aspect-square relative rounded-3xl overflow-hidden shadow-sm"
                         >
-                            <img
+                            <Image
                                 src={artist.image}
                                 alt={artist.name}
+                                fill
+                                sizes="(min-width: 1024px) 12vw, (min-width: 768px) 20vw, 40vw"
                                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                             />
                         </motion.div>

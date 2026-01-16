@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -40,8 +40,13 @@ export default function AdminOrdersPage() {
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState("");
+  const searchQueryRef = useRef(searchQuery);
 
-  const fetchOrders = async () => {
+  useEffect(() => {
+    searchQueryRef.current = searchQuery;
+  }, [searchQuery]);
+
+  const fetchOrders = useCallback(async (searchOverride?: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -49,8 +54,9 @@ export default function AdminOrdersPage() {
       if (statusFilter !== "ALL") {
         params.set("status", statusFilter);
       }
-      if (searchQuery) {
-        params.set("search", searchQuery);
+      const searchValue = searchOverride ?? searchQueryRef.current;
+      if (searchValue) {
+        params.set("search", searchValue);
       }
 
       const response = await fetch(`/api/admin/orders?${params.toString()}`);
@@ -64,15 +70,15 @@ export default function AdminOrdersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter]);
 
   useEffect(() => {
     fetchOrders();
-  }, [statusFilter]);
+  }, [fetchOrders]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchOrders();
+    fetchOrders(searchQuery);
   };
 
   const getStatusBadgeColor = (status: OrderStatus) => {

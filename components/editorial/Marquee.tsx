@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 
 // Placeholder images for the marquee
 const covers = [
@@ -49,9 +50,11 @@ export const Marquee = () => {
                 ${i % 2 === 0 ? 'rounded-full' : 'rounded-none'}
               `}
                         >
-                            <img
+                            <Image
                                 src={src}
                                 alt={`Album Cover ${i}`}
+                                fill
+                                sizes="(min-width: 768px) 300px, 200px"
                                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-110 hover:rotate-3"
                             />
                         </div>

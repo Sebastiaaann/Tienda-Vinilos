@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -536,7 +537,17 @@ export default function CheckoutPage() {
                         <div key={item.id} className="flex justify-between items-center text-sm">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-zinc-800 rounded flex items-center justify-center text-zinc-500 text-xs shrink-0 overflow-hidden">
-                              {item.image ? <img src={item.image} alt="" className="w-full h-full object-cover"/> : <ShoppingBag className="w-4 h-4" />}
+                              {item.image ? (
+                                <Image
+                                  src={item.image}
+                                  alt={item.name}
+                                  width={32}
+                                  height={32}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <ShoppingBag className="w-4 h-4" />
+                              )}
                             </div>
                             <div>
                               <p className="font-medium line-clamp-1">{item.name}</p>
