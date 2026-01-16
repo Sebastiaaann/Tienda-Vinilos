@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { Cursor } from '@/components/editorial/Cursor';
 import { Hero } from '@/components/editorial/Hero';
 import { Intro } from '@/components/editorial/Intro';
@@ -18,10 +19,19 @@ interface NextRequestInit extends RequestInit {
   next?: NextFetchRequestConfig;
 }
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  const headerList = headers();
+  const host = headerList.get("host");
+  const proto = headerList.get("x-forwarded-proto") ?? "http";
+  return host ? `${proto}://${host}` : "http://localhost:3000";
+};
+
 async function getFeaturedProducts(): Promise<Product[]> {
   try {
     // INCREASED LIMIT TO 12 AND REMOVED CACHING TO FIX IMAGE UPDATES
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/products?limit=12`, {
+    const res = await fetch(new URL("/api/products?limit=12", getBaseUrl()), {
       next: { revalidate: 0 },
       cache: 'no-store'
     } as NextRequestInit);

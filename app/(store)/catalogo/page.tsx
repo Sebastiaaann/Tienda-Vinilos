@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { Cursor } from '@/components/editorial/Cursor';
 import VinylCarousel from '@/components/store/VinylCarousel';
 import { CatalogGrid } from '@/components/store/CatalogGrid';
@@ -14,9 +15,18 @@ interface NextRequestInit extends RequestInit {
   next?: NextFetchRequestConfig;
 }
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  const headerList = headers();
+  const host = headerList.get("host");
+  const proto = headerList.get("x-forwarded-proto") ?? "http";
+  return host ? `${proto}://${host}` : "http://localhost:3000";
+};
+
 async function getProducts(category?: string): Promise<Product[]> {
   try {
-    const url = new URL(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/products`);
+    const url = new URL("/api/products", getBaseUrl());
     url.searchParams.append('limit', '24');
     if (category) {
       // Map frontend categories to backend categories if needed, or pass directly

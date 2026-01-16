@@ -18,6 +18,8 @@ interface CatalogGridProps {
     products: any[];
 }
 
+const toImageSrc = (src: string) => encodeURI(src);
+
 import { motion } from "framer-motion";
 
 export const CatalogGrid = ({ products }: CatalogGridProps) => {
@@ -63,7 +65,7 @@ export const CatalogGrid = ({ products }: CatalogGridProps) => {
                         <div className="aspect-square relative mb-6 shadow-sm group-hover:shadow-md transition-shadow">
                             {product.image ? (
                                 <Image
-                                    src={product.image}
+                                    src={toImageSrc(product.image)}
                                     alt={product.name}
                                     fill
                                     sizes="(min-width: 1024px) 20vw, (min-width: 768px) 30vw, 45vw"

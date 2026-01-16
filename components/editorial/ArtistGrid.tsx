@@ -22,6 +22,8 @@ const artists = [
     { name: 'RADIOHEAD', image: '/images/the-elephant-man-md-web.jpg' },
 ];
 
+const toImageSrc = (src: string) => encodeURI(src);
+
 export const ArtistGrid = () => {
     return (
         <section className="py-24 px-6 md:px-12 bg-neutral-100/50 text-black">
@@ -34,7 +36,7 @@ export const ArtistGrid = () => {
                             className="w-full aspect-square relative rounded-3xl overflow-hidden shadow-sm"
                         >
                             <Image
-                                src={artist.image}
+                                src={toImageSrc(artist.image)}
                                 alt={artist.name}
                                 fill
                                 sizes="(min-width: 1024px) 12vw, (min-width: 768px) 20vw, 40vw"

@@ -21,6 +21,8 @@ const covers = [
     "/images/twin-peaks-md-web.jpg"
 ];
 
+const toImageSrc = (src: string) => encodeURI(src);
+
 export const Marquee = () => {
     return (
         <section className="py-12 bg-white overflow-hidden cursor-scale">
@@ -51,7 +53,7 @@ export const Marquee = () => {
               `}
                         >
                             <Image
-                                src={src}
+                                src={toImageSrc(src)}
                                 alt={`Album Cover ${i}`}
                                 fill
                                 sizes="(min-width: 768px) 300px, 200px"

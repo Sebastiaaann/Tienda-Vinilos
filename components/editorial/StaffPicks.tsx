@@ -31,6 +31,8 @@ const staffMembers = [
     { id: 'sophie', name: "SOPHIE'S STAFF PICKS", image: "/images/lilya-4ever-md-web.jpg", picks: [] },
 ];
 
+const toImageSrc = (src: string) => encodeURI(src);
+
 export const StaffPicks = () => {
     const [activeTab, setActiveTab] = useState(staffMembers[0].id);
     const activeStaff = staffMembers.find(m => m.id === activeTab) || staffMembers[0];
@@ -68,7 +70,7 @@ export const StaffPicks = () => {
                         <div className="w-full lg:w-1/4">
                             <div className="aspect-[3/4] relative overflow-hidden bg-neutral-100">
                                 <Image
-                                    src={activeStaff.image}
+                                    src={toImageSrc(activeStaff.image)}
                                     alt={activeStaff.name}
                                     fill
                                     sizes="(min-width: 1024px) 25vw, 50vw"
@@ -83,7 +85,7 @@ export const StaffPicks = () => {
                                 <Link href={`/productos/${pick.id}`} key={i} className="group cursor-scale">
                                     <div className="aspect-square relative overflow-hidden bg-neutral-50 mb-4">
                                         <Image
-                                            src={pick.image}
+                                            src={toImageSrc(pick.image)}
                                             alt={pick.album}
                                             fill
                                             sizes="(min-width: 1024px) 18vw, (min-width: 768px) 28vw, 45vw"
