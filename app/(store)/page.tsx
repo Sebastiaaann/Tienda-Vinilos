@@ -58,6 +58,9 @@ export default async function HomePage() {
         <TextTicker />
         <ArtistGrid />
         <Intro />
+        <section className="px-6 md:px-12 pt-12">
+          <h2 className="text-xl md:text-2xl font-black tracking-wide uppercase">Ultimos Lanzamientos</h2>
+        </section>
         <VinylGrid products={featuredProducts} />
         <StaffPicks />
       </main>

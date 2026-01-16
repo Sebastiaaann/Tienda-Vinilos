@@ -62,20 +62,22 @@ export const CatalogGrid = ({ products }: CatalogGridProps) => {
                         className="group block"
                     >
                         {/* Image Container */}
-                        <div className="aspect-square relative mb-6 shadow-sm group-hover:shadow-md transition-shadow">
+                        <div className="aspect-square relative mb-6 shadow-sm group-hover:shadow-md transition-shadow overflow-hidden">
                             {product.image ? (
                                 <Image
                                     src={toImageSrc(product.image)}
                                     alt={product.name}
                                     fill
                                     sizes="(min-width: 1024px) 20vw, (min-width: 768px) 30vw, 45vw"
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                                 />
                             ) : (
                                 <div className="w-full h-full bg-neutral-100 flex items-center justify-center text-neutral-300">
                                     No Image
                                 </div>
                             )}
+
+                            <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
 
                             {/* Vinyl peaking out effect on hover (optional, keep simple for now) */}
                         </div>
